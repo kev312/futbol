@@ -6,125 +6,89 @@
 <title>Catálogo — Camisetas de Fútbol</title>
 <style>
   :root{
-    --bg:#0b0d10; --panel:#111418; --panel-2:#151a1f; --text:#e6e8eb; --muted:#a8b0b9;
+    --bg:#0b0d10; --panel:#111418; --text:#e6e8eb; --muted:#a8b0b9;
     --brand:#29b457; --brand-2:#2ad38c; --danger:#ff5d5d;
     --ring:0 0 0 3px rgba(42,211,140,0.25); --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35);
     --max-width:1220px;
   }
-
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     background: linear-gradient(180deg,var(--bg), #0e1116 40%, var(--bg)); color:var(--text);
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.3;
   }
-  a{color:inherit; text-decoration:none}
   .site-container{max-width:var(--max-width); margin:0 auto; padding:0 16px}
+  a{color:inherit; text-decoration:none}
 
-/* ===== HEADER ===== */
-  header.header-bar{
-    position:sticky; top:0; z-index:60; backdrop-filter: blur(8px);
-    background: rgba(11,13,16,.7); border-bottom: 1px solid #172024;
-  }
+  /* Header */
+  header{position:sticky; top:0; z-index:60; backdrop-filter:blur(8px); background:rgba(11,13,16,.7); border-bottom:1px solid #172024;}
   .header-row{display:flex; align-items:center; gap:18px; padding:12px 0}
-  .site-brand{display:flex; align-items:center; gap:12px; font-weight:800}
-  .logo-badge{
-    width:44px; height:44px; border-radius:10px; display:grid; place-items:center; font-weight:900; color:#0b0d10;
-    background: radial-gradient(100% 100% at 0% 0%, var(--brand-2), var(--brand));
-    box-shadow: 0 6px 22px rgba(42,211,140,.25); font-size:16px;
-  }
-  .brand-title{font-size:16px; opacity:.95}
-  .brand-sub{font-size:12px; color:var(--muted)}
+  .logo-badge{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-weight:900;color:#0b0d10;background:radial-gradient(100% 100% at 0% 0%,var(--brand-2),var(--brand));box-shadow:0 6px 22px rgba(42,211,140,.25);}
 
-  /* pills ligas */
+  /* Pills ligas */
   nav.nav-leagues{margin-left:12px; display:flex; gap:8px; flex-wrap:wrap}
-  .pill-nav{
-    padding:8px 12px; border-radius:999px;
-    background: linear-gradient(135deg, var(--brand-2), var(--brand));
-    color:#04110a; font-weight:800; font-size:13px; border:none;
-    box-shadow: 0 6px 16px rgba(42,211,140,0.08);
-  }
-  .pill-nav:active, .pill-nav[aria-pressed="true"]{ transform: translateY(0); outline: 2px solid rgba(2,80,30,0.12); }
+  .pill-nav{padding:8px 12px; border-radius:999px; background:linear-gradient(135deg,var(--brand-2),var(--brand)); color:#04110a; font-weight:800; font-size:13px; border:none; box-shadow:0 6px 16px rgba(42,211,140,0.08); cursor:pointer}
+  .pill-nav.active{ outline: 2px solid rgba(2,80,30,0.12); transform:translateY(-1px); }
 
+  /* Header right */
   .header-actions{margin-left:auto; display:flex; gap:10px; align-items:center}
-  .search-compact{min-width:260px}
-  .search-compact input{width:100%; padding:8px 10px; border-radius:10px; border:1px solid #27303a; background:#0e1318; color:var(--text)}
-  .action-icon{padding:8px 10px; border-radius:10px; border:1px solid transparent; background:transparent; cursor:pointer}
-  .cart-badge{position:relative}
-  .cart-count{position:absolute; top:-6px; right:-6px; background:var(--danger); color:#fff; border-radius:999px; padding:2px 6px; font-size:11px; font-weight:700}
+  .search-compact input{width:260px;padding:8px;border-radius:10px;border:1px solid #27303a;background:#0e1318;color:var(--text)}
 
-/* ===== LAYOUT ===== */
+  /* Layout */
   .main-layout{display:grid; grid-template-columns:300px 1fr; gap:18px; padding:18px 0 36px}
   @media (max-width:980px){ .main-layout{grid-template-columns:1fr} aside.sidebar-panel{position:static} }
 
-/* ===== SIDEBAR ===== */
-  aside.sidebar-panel{position:sticky; top:110px; align-self:start}
-  .panel{background:linear-gradient(180deg,#12171d,#0f1318); border:1px solid #172024; border-radius:var(--radius); padding:16px; box-shadow: var(--shadow)}
-  .panel h3{margin:0 0 12px; font-size:16px; color:#e9edf2}
+  /* Sidebar */
+  .panel{background:linear-gradient(180deg,#12171d,#0f1318); border:1px solid #172024; border-radius:var(--radius); padding:16px; box-shadow:var(--shadow)}
   .form-control{display:flex; flex-direction:column; gap:8px; margin:10px 0}
-  label{font-size:13px; color:var(--muted)}
-  select,input[type="text"],input[type="number"],input[type="range"]{ width:100%; padding:10px 12px; border-radius:12px; border:1px solid #27303a; background:#0e1318; color:var(--text)}
-  select:focus,input:focus{outline:none; box-shadow:var(--ring); border-color:#2ad38c55}
-  .panel-actions{display:flex; gap:8px; margin-top:8px}
-  .btn{cursor:pointer; border:none; border-radius:12px; padding:10px 12px; font-weight:700}
-  .btn-primary{background:linear-gradient(135deg, var(--brand-2), var(--brand)); color:#0b0d10}
-  .btn-ghost{background:transparent; color:var(--text); border:1px solid #27303a}
+  .btn{cursor:pointer;border:none;border-radius:12px;padding:10px 12px;font-weight:700}
+  .btn-primary{background:linear-gradient(135deg,var(--brand-2),var(--brand)); color:#0b0d10}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid #27303a}
 
-/* ===== TOOLBAR ===== */
-  .toolbar{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:6px 0 12px}
-  .searchwide{flex:1; min-width:220px}
+  /* Toolbar */
+  .toolbar{display:flex; gap:12px; align-items:center; margin:6px 0 12px}
   .searchwide input{width:100%; padding:10px 12px; border-radius:12px; border:1px solid #27303a; background:#0e1318; color:var(--text)}
-  .sort-select{min-width:200px}
 
-/* ===== PRODUCTS GRID ===== */
+  /* Grid */
   .products-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
   @media (max-width:1100px){ .products-grid{grid-template-columns:repeat(2,1fr)} }
   @media (max-width:700px){ .products-grid{grid-template-columns:1fr} }
 
-  .product-card{
-    border-radius:18px; overflow:hidden; border:1px solid #172024; background:linear-gradient(180deg,#10151a,#0f1317);
-    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; display:flex; flex-direction:column;
-  }
-  .product-card:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.45); border-color:#21323a }
-  .product-thumb{aspect-ratio:4/3; background: radial-gradient(120% 120% at 0% 0%, #1a2430, #0f1318); display:grid; place-items:center}
+  .product-card{border-radius:18px; overflow:hidden; border:1px solid #172024; background:linear-gradient(180deg,#10151a,#0f1317); display:flex; flex-direction:column; transition:transform .18s}
+  .product-card:hover{transform:translateY(-3px)}
+  .product-thumb{aspect-ratio:4/3; background:radial-gradient(120% 120% at 0% 0%, #1a2430, #0f1318); display:grid; place-items:center}
   .jersey-svg{width:64%}
   .product-img{width:64%; height:auto; object-fit:contain; display:block}
   .product-info{padding:12px 14px; display:flex; flex-direction:column; gap:8px}
-  .product-meta{display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:12px}
-  .product-title{font-size:15px; font-weight:800; margin:6px 0}
+  .product-title{font-size:15px; font-weight:800}
   .product-price{font-size:16px; font-weight:900}
-  .product-tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:6px}
+  .product-tags{display:flex; gap:6px; flex-wrap:wrap}
   .product-tag{font-size:11px; padding:4px 8px; border:1px solid #223034; border-radius:999px; color:#cfd6dd}
-  .product-actions{display:flex; gap:8px; margin-top:12px; margin-left:auto}
 
-/* ===== MODAL ===== */
-  .modal-overlay{position:fixed; inset:0; background: rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; padding:20px; transition:opacity .18s ease}
+  /* Modal */
+  .modal-overlay{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center}
   .modal-overlay.open{display:flex}
-  .modal-card{max-width:820px; width:100%; background:#0f1318; border:1px solid #233238; border-radius:18px; overflow:hidden; display:grid; grid-template-columns:1.3fr 1fr}
+  .modal-card{max-width:820px;width:100%; background:#0f1318; border:1px solid #233238; border-radius:18px; overflow:hidden; display:grid; grid-template-columns:1.3fr 1fr}
   @media (max-width:860px){ .modal-card{grid-template-columns:1fr} }
-  .modal-media{background: radial-gradient(120% 120% at 0% 0%, #1a2430, #0f1318); display:grid; place-items:center; padding:18px}
+  .modal-media{display:grid; place-items:center; padding:18px; background:radial-gradient(120% 120% at 0% 0%, #1a2430, #0f1318)}
   .modal-img{max-width:100%; height:auto; object-fit:contain; border-radius:10px}
   .modal-body{padding:18px; position:relative}
   .modal-close{position:absolute; top:14px; right:14px; background:transparent; border:1px solid #233238; color:#cbd3db; border-radius:12px; padding:8px 10px; cursor:pointer}
 
-/* ===== TOAST ===== */
+  /* Toast */
   #toast-msg{position:fixed; bottom:20px; right:20px; background:#0f1318; border:1px solid #233238; padding:12px 14px; border-radius:12px; display:none}
   #toast-msg.show{display:block}
-
-/* ===== FOOTER ===== */
-  footer{border-top:1px solid #172024; color:#9aa3ad; font-size:13px}
-  footer .site-container{display:flex; justify-content:space-between; gap:12px; padding:18px 16px}
 </style>
 </head>
 <body>
   <header class="header-bar">
     <div class="site-container header-row">
-      <div class="site-brand" aria-label="Fútbol Camisetas">
-        <div class="logo-badge" aria-hidden="true">FC</div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <div class="logo-badge">FC</div>
         <div>
-          <div class="brand-title">Fútbol Camisetas</div>
-          <div class="brand-sub">Ligas, equipos y temporadas</div>
+          <div style="font-weight:800">Fútbol Camisetas</div>
+          <div style="font-size:12px; color:var(--muted)">Ligas, equipos y temporadas</div>
         </div>
       </div>
 
@@ -134,8 +98,8 @@
         <div class="search-compact">
           <input id="inputHeaderSearch" placeholder="Buscar camisetas, jugadores, temporadas…" />
         </div>
-        <button class="action-icon" id="btnAccount" title="Mi cuenta">Cuenta</button>
-        <div class="cart-badge" title="Ver carrito">
+        <button class="action-icon" id="btnAccount">Cuenta</button>
+        <div class="cart-badge">
           <button class="action-icon" id="btnViewCart">Carrito</button>
           <span class="cart-count" id="cartCount">0</span>
         </div>
@@ -143,23 +107,18 @@
     </div>
   </header>
 
-  <main class="site-container main-layout" id="mainLayout">
+  <main class="site-container main-layout">
     <aside class="sidebar-panel">
-      <div class="panel" aria-labelledby="panelFiltersTitle">
-        <h3 id="panelFiltersTitle">Filtros</h3>
-
+      <div class="panel">
+        <h3>Filtros</h3>
         <div class="form-control">
           <label for="selectLeague">Liga</label>
-          <select id="selectLeague" aria-controls="selectTeam"></select>
+          <select id="selectLeague"></select>
         </div>
-
         <div class="form-control">
           <label for="selectTeam">Equipo</label>
           <select id="selectTeam"><option value="">Todos</option></select>
         </div>
-
-        <!-- Buscador y slider eliminados como pediste -->
-
         <div class="panel-actions">
           <button class="btn btn-primary" id="btnApplyFilters">Aplicar</button>
           <button class="btn btn-ghost" id="btnClearFilters">Limpiar</button>
@@ -169,9 +128,7 @@
 
     <section>
       <div class="toolbar">
-        <div class="searchwide">
-          <input id="inputQuickSearch" type="text" placeholder="Buscar rápido…" />
-        </div>
+        <div class="searchwide"><input id="inputQuickSearch" placeholder="Buscar rápido…" /></div>
         <div class="sort-select">
           <select id="selectSort">
             <option value="popular">Ordenar: Popularidad</option>
@@ -183,8 +140,7 @@
         <button class="pill-nav" id="btnResetFilters">Reiniciar filtros</button>
       </div>
 
-      <div id="resultsMeta" style="color:var(--muted); font-size:13px; margin:6px 0 12px"></div>
-
+      <div id="resultsMeta" style="color:var(--muted); margin-bottom:12px"></div>
       <div class="products-grid" id="gridProducts" aria-live="polite"></div>
     </section>
   </main>
@@ -203,9 +159,7 @@
         </div>
         <div class="form-control" style="margin-top:12px">
           <label for="selectSize">Talla</label>
-          <select id="selectSize">
-            <option>S</option><option>M</option><option>L</option><option>XL</option>
-          </select>
+          <select id="selectSize"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
         </div>
         <div style="display:flex; gap:8px; margin-top:12px">
           <button class="btn btn-primary" id="btnAddToCart">Añadir al carrito</button>
@@ -217,17 +171,20 @@
 
   <div id="toast-msg" role="status" aria-live="polite"></div>
 
-  <footer>
-    <div class="site-container">
+  <footer style="border-top:1px solid #172024; color:var(--muted); padding:18px 16px;">
+    <div class="site-container" style="display:flex; justify-content:space-between;">
       <div>© <span id="footerYear"></span> Streetwear Store - Fútbol Camisetas</div>
       <div>Hecho con pasión por el fútbol ⚽</div>
     </div>
   </footer>
 
 <script>
-/* ====== Datos (con rutas a imágenes locales en assets/images/) ====== */
+/* ---------------------------
+   CATALOGO: cada producto con su propia imagen
+   Las rutas son relativas: assets/images/<nombre>.jpg
+   --------------------------- */
 const catalog = [
-  { id:'laliga-barca-25-home', name:'FC Barcelona Local 2024/25', league:'LaLiga', team:'FC Barcelona', season:'2024/25', kit:'Local', price:119, tags:['Nike','Jugador: Pedri'], image:'camisetas\laliga\barcelona\barca.png' },
+  { id:'laliga-barca-25-home', name:'FC Barcelona Local 2024/25', league:'LaLiga', team:'FC Barcelona', season:'2024/25', kit:'Local', price:119, tags:['Nike','Jugador: Pedri'], image:'assets/images/barcelona-24-25.jpg' },
   { id:'laliga-madrid-25-away', name:'Real Madrid Visitante 2024/25', league:'LaLiga', team:'Real Madrid', season:'2024/25', kit:'Visitante', price:115, tags:['adidas','Jugador: Bellingham'], image:'assets/images/real-madrid-24-25.jpg' },
   { id:'laliga-atleti-24-home', name:'Atlético de Madrid Local 2023/24', league:'LaLiga', team:'Atlético de Madrid', season:'2023/24', kit:'Local', price:99, tags:['Nike'], image:'assets/images/atletico-23-24.jpg' },
 
@@ -242,7 +199,7 @@ const catalog = [
   { id:'bund-dortmund-24-home', name:'Borussia Dortmund Local 2023/24', league:'Bundesliga', team:'Borussia Dortmund', season:'2023/24', kit:'Local', price:95, tags:['Puma'], image:'assets/images/dortmund-23-24.jpg' },
 
   { id:'ligue1-psg-25-home', name:'PSG Local 2024/25', league:'Ligue 1', team:'Paris Saint-Germain', season:'2024/25', kit:'Local', price:125, tags:['Nike','Jugador: Mbappé'], image:'assets/images/psg-24-25.jpg' },
-  { id:'ligue1-marseille-24-away', name:'Olympique Marsella Visitante 2023/24', league:'Ligue 1', team:'Olympique de Marsella', season:'2023/24', kit:'Visitante', price:88, tags:['Puma'], image:'assets/images/marseille-23-24.jpg' },
+  { id:'ligue1-marseille-24-away', name:'Olympique Marsella Visitante 2023/24', league:'Ligue 1', team:'Olympique de Marsella', season:'2023/24', kit:'Visitante', price:88, tags:['Puma'], image:'assets/images/marseille-23-24.jpg' }
 ];
 
 const leagueTeams = {
@@ -253,11 +210,11 @@ const leagueTeams = {
   'Ligue 1': ['Paris Saint-Germain','Olympique de Marsella','Olympique Lyon','AS Monaco','Lille']
 };
 
-/* HELPERS */
+/* Helpers */
 const $ = s => document.querySelector(s);
 const el = (tag, attrs={}) => Object.assign(document.createElement(tag), attrs);
 
-/* SVG fallback */
+/* SVG fallback (solo si falta imagen) */
 function jerseySVG(){
   const wrapper = el('div');
   wrapper.innerHTML = `
@@ -273,13 +230,13 @@ function jerseySVG(){
   return wrapper.firstElementChild;
 }
 
-/* STATE */
+/* Estado y persistencia carrito */
 const state = { league:'', team:'', search:'', sort:'popular', cartCount:0 };
 let lastFocusedElement = null;
 function loadCart(){ state.cartCount = parseInt(localStorage.getItem('cartCount') || '0', 10); }
 function saveCart(){ localStorage.setItem('cartCount', String(state.cartCount)); }
 
-/* INIT */
+/* Inicialización */
 function init(){
   $('#footerYear').textContent = new Date().getFullYear();
   loadCart();
@@ -288,16 +245,16 @@ function init(){
   const nav = $('#navLeagues');
   Object.keys(leagueTeams).forEach(l => {
     const btn = el('button', {className:'pill-nav', type:'button', innerText: l});
-    btn.addEventListener('click', ()=>{ state.league = l; syncFiltersFromState(); render(); scrollToTop(); });
+    btn.addEventListener('click', ()=>{ state.league = l; syncFiltersFromState(); render(); scrollToTop(); updateActivePill(l); });
     nav.appendChild(btn);
   });
 
   // select liga
   const leagueSelect = $('#selectLeague');
   leagueSelect.innerHTML = `<option value="">Todas</option>` + Object.keys(leagueTeams).map(l=>`<option value="${l}">${l}</option>`).join('');
-  leagueSelect.addEventListener('change', e=>{ state.league = e.target.value; updateTeamOptions(); });
+  leagueSelect.addEventListener('change', e=>{ state.league = e.target.value; updateTeamOptions(); render(); });
 
-  $('#selectTeam').addEventListener('change', e=>{ state.team = e.target.value; });
+  $('#selectTeam').addEventListener('change', e=>{ state.team = e.target.value; render(); });
   $('#inputQuickSearch').addEventListener('input', e=>{ state.search = e.target.value; render(); });
   $('#inputHeaderSearch').addEventListener('input', e=>{ state.search = e.target.value; render(); });
 
@@ -314,15 +271,20 @@ function init(){
 
   $('#btnAddToCart').addEventListener('click', ()=>{ state.cartCount++; $('#cartCount').textContent = state.cartCount; saveCart(); toast('Añadido al carrito'); });
   $('#btnShare').addEventListener('click', async ()=>{
-    try{
-      const data = $('#modalTitle').textContent + ' — ' + $('#modalMeta').textContent;
-      await navigator.clipboard.writeText(data); toast('Información copiada al portapapeles');
-    }catch{ toast('No se pudo compartir'); }
+    try{ await navigator.clipboard.writeText($('#modalTitle').textContent + ' — ' + $('#modalMeta').textContent); toast('Información copiada'); }
+    catch{ toast('No se pudo compartir'); }
   });
 
   updateTeamOptions();
   syncFiltersFromState();
   render();
+}
+
+/* Marca pill activa */
+function updateActivePill(activeLeague){
+  document.querySelectorAll('.pill-nav').forEach(btn=>{
+    btn.classList.toggle('active', btn.innerText === activeLeague);
+  });
 }
 
 function updateTeamOptions(){
@@ -335,7 +297,7 @@ function updateTeamOptions(){
 }
 
 function resetFilters(){
-  state.league = ''; state.team = ''; state.search = ''; state.sort = 'popular';
+  state.league=''; state.team=''; state.search=''; state.sort='popular';
   syncFiltersFromState();
 }
 
@@ -347,6 +309,7 @@ function syncFiltersFromState(){
   $('#inputHeaderSearch').value = state.search;
   $('#selectSort').value = state.sort;
   $('#cartCount').textContent = state.cartCount;
+  updateActivePill(state.league);
 }
 
 function render(){
@@ -355,15 +318,9 @@ function render(){
   if(state.team) items = items.filter(p => p.team === state.team);
   if(state.search){
     const q = state.search.toLowerCase();
-    items = items.filter(p => (
-      p.name.toLowerCase().includes(q) ||
-      p.team.toLowerCase().includes(q) ||
-      p.season.toLowerCase().includes(q) ||
-      p.tags.join(' ').toLowerCase().includes(q)
-    ));
+    items = items.filter(p => p.name.toLowerCase().includes(q) || p.team.toLowerCase().includes(q) || p.season.toLowerCase().includes(q) || p.tags.join(' ').toLowerCase().includes(q));
   }
 
-  // orden
   if(state.sort === 'priceAsc') items.sort((a,b)=>a.price-b.price);
   else if(state.sort === 'priceDesc') items.sort((a,b)=>b.price-a.price);
   else if(state.sort === 'seasonDesc') items.sort((a,b)=>seasonValue(b.season)-seasonValue(a.season));
@@ -379,31 +336,31 @@ function seasonValue(s){
 }
 
 function productCard(p){
-  const card = el('article', {className:'product-card', role:'article'});
-  const thumb = el('div', {className:'product-thumb'});
-  // si hay imagen, usarla; si falla, mostrar SVG fallback
+  const card = el('article',{className:'product-card', role:'article'});
+  const thumb = el('div',{className:'product-thumb'});
+
   if(p.image){
-    const img = el('img', {src:p.image, alt:p.name, className:'product-img'});
+    const img = el('img',{src:p.image, alt:p.name, className:'product-img'});
     img.loading = 'lazy';
-    img.onerror = ()=>{ thumb.innerHTML=''; thumb.appendChild(jerseySVG()); };
+    img.onerror = ()=>{ thumb.innerHTML=''; thumb.appendChild(jerseySVG()); }; // fallback si falla
     thumb.appendChild(img);
   } else {
     thumb.appendChild(jerseySVG());
   }
 
-  const info = el('div', {className:'product-info'});
-  const meta = el('div', {className:'product-meta'});
+  const info = el('div',{className:'product-info'});
+  const meta = el('div',{className:'product-meta'});
   meta.innerHTML = `<span>${p.league}</span><span>${p.season}</span>`;
 
-  const title = el('div', {className:'product-title'}); title.textContent = p.name;
-  const price = el('div', {className:'product-price'}); price.textContent = p.price.toFixed(0) + '€';
+  const title = el('div',{className:'product-title'}); title.textContent = p.name;
+  const price = el('div',{className:'product-price'}); price.textContent = p.price.toFixed(0) + '€';
 
-  const tags = el('div', {className:'product-tags'});
-  [p.team, p.kit, ...p.tags].forEach(t => { const tg = el('span', {className:'product-tag'}); tg.textContent = t; tags.appendChild(tg); });
+  const tags = el('div',{className:'product-tags'});
+  [p.team,p.kit,...p.tags].forEach(t=>{ const tg = el('span',{className:'product-tag'}); tg.textContent = t; tags.appendChild(tg); });
 
-  const actions = el('div', {className:'product-actions'});
-  const view = el('button', {className:'btn btn-primary', type:'button'}); view.textContent = 'Ver';
-  const add = el('button', {className:'btn btn-ghost', type:'button'}); add.textContent = 'Añadir';
+  const actions = el('div',{className:'product-actions'});
+  const view = el('button',{className:'btn btn-primary', type:'button'}); view.textContent = 'Ver';
+  const add = el('button',{className:'btn btn-ghost', type:'button'}); add.textContent = 'Añadir';
   view.addEventListener('click', ()=> openModal(p, view));
   add.addEventListener('click', ()=> { state.cartCount++; $('#cartCount').textContent = state.cartCount; saveCart(); toast('Añadido al carrito'); });
 
@@ -417,12 +374,12 @@ function openModal(p, openerEl = null){
   $('#modalTitle').textContent = p.name;
   $('#modalMeta').textContent = `${p.team} · ${p.league} · ${p.season}`;
   $('#modalTags').innerHTML = '';
-  [p.kit, ...p.tags].forEach(t=>{ const s = el('span',{className:'product-tag'}); s.textContent = t; $('#modalTags').appendChild(s); });
+  [p.kit,...p.tags].forEach(t=>{ const s = el('span',{className:'product-tag'}); s.textContent = t; $('#modalTags').appendChild(s); });
   $('#modalPrice').textContent = p.price.toFixed(0) + '€';
 
   const media = $('#modalMedia'); media.innerHTML = '';
   if(p.image){
-    const img = el('img', {src:p.image, alt:p.name, className:'modal-img'});
+    const img = el('img',{src:p.image, alt:p.name, className:'modal-img'});
     img.loading = 'eager';
     img.onerror = ()=>{ media.innerHTML=''; media.appendChild(jerseySVG()); };
     media.appendChild(img);
@@ -434,7 +391,7 @@ function openModal(p, openerEl = null){
   $('#productModal').classList.add('open');
   $('#productModal').style.display = 'flex';
   $('#productModal').setAttribute('aria-hidden','false');
-  setTimeout(()=> { $('#btnCloseModal').focus(); }, 50);
+  setTimeout(()=>{ $('#btnCloseModal').focus(); }, 50);
 }
 
 function closeModal(){
@@ -447,11 +404,12 @@ function closeModal(){
 
 function toast(msg){
   const t = $('#toast-msg'); t.textContent = msg; t.classList.add('show'); t.style.display = 'block';
-  setTimeout(()=> { t.classList.remove('show'); t.style.display = 'none'; }, 1600);
+  setTimeout(()=>{ t.classList.remove('show'); t.style.display = 'none'; }, 1600);
 }
 
 function scrollToTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
 
+/* Start */
 init();
 </script>
 </body>
