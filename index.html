@@ -1,464 +1,190 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Catálogo — Camisetas de Fútbol</title>
+  <meta charset="UTF-8">
+  <title>Catálogo de Camisetas</title>
   <style>
-    :root{
-      --bg:#0b0d10; --panel:#111418; --text:#e6e8eb; --muted:#a8b0b9;
-      --brand:#29b457; --brand-2:#2ad38c; --danger:#ff5d5d;
-      --ring:0 0 0 3px rgba(42,211,140,0.25); --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35);
-      --max-width:1220px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
     body{
-      margin:0; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      background:linear-gradient(180deg,#0b0d10,#0e1116 40%,#0b0d10); color:var(--text);
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.3;
+      font-family:sans-serif;
+      margin:0;
+      padding:0;
+      background:#f4f4f4
     }
-    a{color:inherit; text-decoration:none}
-    .site-container{max-width:var(--max-width); margin:0 auto; padding:0 16px}
-
-    /* HEADER */
-    header.header-bar{
-      position:sticky; top:0; z-index:60; backdrop-filter:blur(8px);
-      background:rgba(11,13,16,.7); border-bottom:1px solid #172024;
+    .toolbar{
+      display:flex;
+      gap:8px;
+      padding:10px;
+      background:#111
     }
-    .header-row{display:flex; align-items:center; gap:18px; padding:12px 0}
-    .site-brand{display:flex; align-items:center; gap:12px; font-weight:800}
-    .logo-badge{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-weight:900;color:#0b0d10;
-      background:radial-gradient(100% 100% at 0% 0%,var(--brand-2),var(--brand)); box-shadow:0 6px 22px rgba(42,211,140,.25); font-size:16px;}
-    .brand-lines{line-height:1}
-    .brand-title{font-size:16px; opacity:.95}
-    .brand-sub{font-size:12px; color:var(--muted)}
-
-    /* Nav ligas: verde con texto oscuro */
-    nav.nav-leagues{margin-left:12px; display:flex; gap:8px; flex-wrap:wrap}
-    .pill-nav{
-      padding:8px 12px; border-radius:999px;
-      background:linear-gradient(135deg,var(--brand-2),var(--brand));
-      color:#04110a; font-weight:800; font-size:13px; border:none;
-      box-shadow:0 6px 16px rgba(42,211,140,0.08);
+    .btn{
+      padding:6px 12px;
+      border-radius:6px;
+      border:none;
+      cursor:pointer
     }
-    .pill-nav:hover{transform:translateY(-1px); cursor:pointer}
-
-    /* Header acciones */
-    .header-actions{margin-left:auto; display:flex; gap:10px; align-items:center}
-    .search-compact{min-width:240px}
-    .search-compact input{width:100%; padding:8px 10px; border-radius:10px; border:1px solid #27303a; background:#0e1318; color:var(--text)}
-    .action-icon{padding:8px 10px; border-radius:10px; border:1px solid transparent; background:transparent; cursor:pointer}
-    .cart-badge{position:relative}
-    .cart-count{position:absolute; top:-6px; right:-6px; background:var(--danger); color:#fff; border-radius:999px; padding:2px 6px; font-size:11px; font-weight:700}
-
-    /* MAIN LAYOUT */
-    .main-layout{display:grid; grid-template-columns:300px 1fr; gap:18px; padding:18px 0 36px}
-    @media(max-width:980px){ .main-layout{grid-template-columns:1fr} aside.sidebar-panel{position:static} }
-
-    /* SIDEBAR */
-    aside.sidebar-panel{position:sticky; top:110px; align-self:start}
-    .panel{background:linear-gradient(180deg,#12171d,#0f1318); border:1px solid #172024; border-radius:var(--radius); padding:16px; box-shadow:var(--shadow)}
-    .panel h3{margin:0 0 12px; font-size:16px; color:#e9edf2}
-    .form-control{display:flex; flex-direction:column; gap:8px; margin:10px 0}
-    label{font-size:13px; color:var(--muted)}
-    select,input[type="text"],input[type="number"],input[type="range"]{ width:100%; padding:10px 12px; border-radius:12px; border:1px solid #27303a; background:#0e1318; color:var(--text)}
-    select:focus,input:focus{outline:none; box-shadow:var(--ring); border-color:#2ad38c55}
-    .panel-actions{display:flex; gap:8px; margin-top:8px}
-    .btn{cursor:pointer; border:none; border-radius:12px; padding:10px 12px; font-weight:700}
-    .btn-primary{background:linear-gradient(135deg,var(--brand-2),var(--brand)); color:#0b0d10}
-    .btn-ghost{background:transparent; color:var(--text); border:1px solid #27303a}
-
-    /* TOOLBAR */
-    .toolbar{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:6px 0 12px}
-    .searchwide{flex:1; min-width:220px}
-    .searchwide input{width:100%; padding:10px 12px; border-radius:12px; border:1px solid #27303a; background:#0e1318; color:var(--text)}
-    .sort-select{min-width:200px}
-
-    /* GRID */
-    .products-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
-    @media(max-width:1100px){.products-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:700px){.products-grid{grid-template-columns:1fr}}
-
-    /* PRODUCT CARD */
-    .product-card{border-radius:18px; overflow:hidden; border:1px solid #172024; background:linear-gradient(180deg,#10151a,#0f1317); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; display:flex; flex-direction:column}
-    .product-card:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.45); border-color:#21323a}
-    .product-thumb{aspect-ratio:4/3; background:radial-gradient(120% 120% at 0% 0%, #1a2430, #0f1318); display:grid; place-items:center}
-    .jersey-svg{width:64%}
-    .product-img{width:64%; height:auto; object-fit:contain; display:block}
-    .product-info{padding:12px 14px; display:flex; flex-direction:column; gap:8px}
-    .product-meta{display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:12px}
-    .product-title{font-size:15px; font-weight:800; margin:6px 0}
-    .product-price{font-size:16px; font-weight:900}
-    .product-tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:6px}
-    .product-tag{font-size:11px; padding:4px 8px; border:1px solid #223034; border-radius:999px; color:#cfd6dd}
-    .product-actions{display:flex; gap:8px; margin-top:12px; margin-left:auto}
-
-    /* MODAL */
-    .modal-overlay{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; padding:20px; transition:opacity .18s ease}
-    .modal-overlay.open{display:flex}
-    .modal-content{max-width:820px; width:100%; background:#0f1318; border:1px solid #233238; border-radius:18px; overflow:hidden; display:grid; grid-template-columns:1.3fr 1fr}
-    @media(max-width:860px){.modal-content{grid-template-columns:1fr}}
-    .modal-media{background:radial-gradient(120% 120% at 0% 0%, #1a2430, #0f1318); display:grid; place-items:center; padding:18px}
-    .modal-img{max-width:100%; height:auto; object-fit:contain; border-radius:10px}
-    .modal-body{padding:18px; position:relative}
-    .modal-close{position:absolute; top:14px; right:14px; background:transparent; border:1px solid #233238; color:#cbd3db; border-radius:12px; padding:8px 10px; cursor:pointer}
-
-    /* TOAST */
-    #toast-msg{position:fixed; bottom:20px; right:20px; background:#0f1318; border:1px solid #233238; padding:12px 14px; border-radius:12px; display:none}
-    #toast-msg.show{display:block}
-
-    /* FOOTER */
-    footer{border-top:1px solid #172024; color:#9aa3ad; font-size:13px}
-    footer .site-container{display:flex; justify-content:space-between; gap:12px; padding:18px 16px}
+    .btn-league{
+      background:green;
+      color:black;
+      font-weight:bold
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:20px;
+      padding:20px
+    }
+    .product-card{
+      background:#fff;
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 2px 6px rgba(0,0,0,.1);
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      align-items:center
+    }
+    .product-card img{
+      max-width:70%;
+      height:auto;
+      object-fit:contain
+    }
+    .product-title{
+      font-size:14px;
+      font-weight:bold;
+      text-align:center;
+      margin:10px 0
+    }
+    .product-price{
+      color:#444;
+      font-weight:bold
+    }
+    .btn-primary{
+      background:#007bff;
+      color:white;
+      margin:5px 0
+    }
+    .btn-ghost{
+      background:#eee;
+      color:#333;
+      margin:5px 0
+    }
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.6);
+      display:none;
+      justify-content:center;
+      align-items:center
+    }
+    .modal-overlay.open{
+      display:flex
+    }
+    .modal{
+      background:#fff;
+      border-radius:10px;
+      max-width:500px;
+      padding:20px
+    }
+    .modal img{
+      max-width:100%;
+      object-fit:contain;
+      border-radius:6px
+    }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="header-bar">
-    <div class="site-container header-row">
-      <div class="site-brand" aria-label="Fútbol Camisetas">
-        <div class="logo-badge" aria-hidden="true">FC</div>
-        <div class="brand-lines">
-          <div class="brand-title">Fútbol Camisetas</div>
-          <div class="brand-sub">Ligas, equipos y temporadas</div>
-        </div>
-      </div>
 
-      <!-- Nav ligas -->
-      <nav class="nav-leagues" id="navLeagues" aria-label="Navegación ligas"></nav>
+  <!-- Botones de ligas -->
+  <div class="toolbar">
+    <button class="btn btn-league">LaLiga</button>
+    <button class="btn btn-league">Premier League</button>
+    <button class="btn btn-league">Serie A</button>
+    <button class="btn btn-league">Bundesliga</button>
+    <button class="btn btn-league">Ligue 1</button>
+  </div>
 
-      <!-- Acciones -->
-      <div class="header-actions">
-        <div class="search-compact" title="Buscar en el catálogo">
-          <input id="inputHeaderSearch" placeholder="Buscar camisetas, jugadores, temporadas…" />
-        </div>
-        <button class="action-icon" id="btnAccount" title="Mi cuenta">Cuenta</button>
-        <div class="cart-badge" title="Ver carrito">
-          <button class="action-icon" id="btnViewCart">Carrito</button>
-          <span class="cart-count" id="cartCount">0</span>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- Contenedor de productos -->
+  <div id="catalogo" class="grid"></div>
 
-  <!-- MAIN: sidebar + resultados -->
-  <main class="site-container main-layout" id="mainLayout">
-    <!-- SIDEBAR: filtros (sin búsqueda ni slider de precio) -->
-    <aside class="sidebar-panel">
-      <div class="panel" aria-labelledby="panelFiltersTitle">
-        <h3 id="panelFiltersTitle">Filtros</h3>
-
-        <div class="form-control">
-          <label for="selectLeague">Liga</label>
-          <select id="selectLeague" aria-controls="selectTeam"></select>
-        </div>
-
-        <div class="form-control">
-          <label for="selectTeam">Equipo</label>
-          <select id="selectTeam"><option value="">Todos</option></select>
-        </div>
-
-        <div class="panel-actions">
-          <button class="btn btn-primary" id="btnApplyFilters">Aplicar</button>
-          <button class="btn btn-ghost" id="btnClearFilters">Limpiar</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- RESULTADOS -->
-    <section>
-      <div class="toolbar">
-        <div class="searchwide">
-          <input id="inputQuickSearch" type="text" placeholder="Buscar rápido…" />
-        </div>
-        <div class="sort-select">
-          <select id="selectSort">
-            <option value="popular">Ordenar: Popularidad</option>
-            <option value="priceAsc">Precio (menor a mayor)</option>
-            <option value="priceDesc">Precio (mayor a menor)</option>
-            <option value="seasonDesc">Temporada (más reciente)</option>
-          </select>
-        </div>
-        <button class="pill-nav" id="btnResetFilters">Reiniciar filtros</button>
-      </div>
-
-      <div id="resultsMeta" style="color:var(--muted); font-size:13px; margin:6px 0 12px"></div>
-
-      <div class="products-grid" id="gridProducts" aria-live="polite"></div>
-    </section>
-  </main>
-
-  <!-- MODAL -->
-  <div class="modal-overlay" id="modalProduct" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-content" role="document" aria-labelledby="modalTitle">
-      <div class="modal-media" id="modalMedia"></div>
-      <div class="modal-body">
-        <button class="modal-close" id="btnCloseModal" aria-label="Cerrar">✕</button>
-        <h3 id="modalTitle"></h3>
-        <div id="modalMeta" style="color:var(--muted); font-size:13px"></div>
-        <div class="product-tags" id="modalTags" style="margin-top:10px"></div>
-
-        <div style="display:flex; align-items:center; gap:10px; margin-top:12px">
-          <strong class="product-price" id="modalPrice"></strong>
-          <span style="color:var(--muted); font-size:12px">Impuestos incluidos</span>
-        </div>
-
-        <div class="form-control" style="margin-top:12px">
-          <label for="selectSize">Talla</label>
-          <select id="selectSize">
-            <option>S</option><option>M</option><option>L</option><option>XL</option>
-          </select>
-        </div>
-
-        <div style="display:flex; gap:8px; margin-top:12px">
-          <button class="btn btn-primary" id="btnAddToCart">Añadir al carrito</button>
-          <button class="btn btn-ghost" id="btnShare">Compartir</button>
-        </div>
-      </div>
+  <!-- Modal -->
+  <div id="modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal">
+      <h2 id="modalTitle"></h2>
+      <div id="modalImg"></div>
+      <p id="modalPrice"></p>
+      <button id="btnCerrar" class="btn btn-primary">Cerrar</button>
     </div>
   </div>
 
-  <!-- TOAST -->
-  <div id="toast-msg" role="status" aria-live="polite"></div>
+<script>
+const catalog = [
+  {
+    id: 'barca',
+    name: 'FC Barcelona Local 25/26',
+    price: 119,
+    image: 'camisetas\barcelona\barca.png' // 🔹 AQUÍ CAMBIAS LA CAMISETA
+  },
+  {
+    id: 'madrid',
+    name: 'Real Madrid Visitante 24/25',
+    price: 115,
+    image: 'assets/images/madrid-24-25.jpg'
+  },
+  {
+    id: 'psg',
+    name: 'PSG Local 24/25',
+    price: 110,
+    image: 'assets/images/psg-24-25.jpg'
+  }
+];
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="site-container">
-      <div>© <span id="footerYear"></span> Streetwear Store - Fútbol Camisetas</div>
-      <div>Hecho con pasión por el fútbol ⚽</div>
-    </div>
-  </footer>
+// Construir tarjetas
+function renderCatalog(){
+  const grid = document.getElementById('catalogo');
+  grid.innerHTML = '';
+  catalog.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'product-card';
 
-  <!-- SCRIPT -->
-  <script>
-    /* ====== CATALOGO: cada objeto incluye image: 'assets/images/...' ====== */
-    const catalog = [
-      { id:'laliga-barca-25-home', name:'FC Barcelona Local 2025/26', league:'LaLiga', team:'FC Barcelona', season:'2025/26', kit:'Local',  tags:['Nike','Jugador: Lamine Yamal'], image:"camisetas\laliga\barcelona\barca.png" },
-      { id:'laliga-madrid-25-away', name:'Real Madrid Visitante 2024/25', league:'LaLiga', team:'Real Madrid', season:'2024/25', kit:'Visitante', price:115, tags:['adidas','Jugador: Bellingham'], image:'assets/images/real-madrid-24-25.jpg' },
-      { id:'laliga-atleti-24-home', name:'Atlético de Madrid Local 2023/24', league:'LaLiga', team:'Atlético de Madrid', season:'2023/24', kit:'Local', price:99, tags:['Nike'], image:'assets/images/atletico-23-24.jpg' },
+    const img = document.createElement('img');
+    img.src = p.image || '';
+    img.alt = p.name;
 
-      { id:'prem-city-25-home', name:'Manchester City Local 2024/25', league:'Premier League', team:'Manchester City', season:'2024/25', kit:'Local', price:120, tags:['Puma','Jugador: Haaland'], image:'assets/images/man-city-24-25.jpg' },
-      { id:'prem-united-24-third', name:'Manchester United Tercera 2023/24', league:'Premier League', team:'Manchester United', season:'2023/24', kit:'Tercera', price:89, tags:['adidas'], image:'assets/images/man-united-23-24.jpg' },
-      { id:'prem-arsenal-25-away', name:'Arsenal Visitante 2024/25', league:'Premier League', team:'Arsenal', season:'2024/25', kit:'Visitante', price:110, tags:['adidas','Jugador: Saka'], image:'assets/images/arsenal-24-25.jpg' },
+    const title = document.createElement('div');
+    title.className = 'product-title';
+    title.textContent = p.name;
 
-      { id:'seriea-juve-25-home', name:'Juventus Local 2024/25', league:'Serie A', team:'Juventus', season:'2024/25', kit:'Local', price:109, tags:['adidas'], image:'assets/images/juventus-24-25.jpg' },
-      { id:'seriea-milan-24-away', name:'AC Milan Visitante 2023/24', league:'Serie A', team:'AC Milan', season:'2023/24', kit:'Visitante', price:92, tags:['Puma'], image:'assets/images/ac-milan-23-24.jpg' },
+    const price = document.createElement('div');
+    price.className = 'product-price';
+    price.textContent = p.price + '€';
 
-      { id:'bund-bayern-25-home', name:'Bayern München Local 2024/25', league:'Bundesliga', team:'Bayern München', season:'2024/25', kit:'Local', price:119, tags:['adidas'], image:'assets/images/bayern-24-25.jpg' },
-      { id:'bund-dortmund-24-home', name:'Borussia Dortmund Local 2023/24', league:'Bundesliga', team:'Borussia Dortmund', season:'2023/24', kit:'Local', price:95, tags:['Puma'], image:'assets/images/dortmund-23-24.jpg' },
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-primary';
+    btn.textContent = 'Ver';
+    btn.onclick = ()=>openModal(p);
 
-      { id:'ligue1-psg-25-home', name:'PSG Local 2024/25', league:'Ligue 1', team:'Paris Saint-Germain', season:'2024/25', kit:'Local', price:125, tags:['Nike','Jugador: Mbappé'], image:'assets/images/psg-24-25.jpg' },
-      { id:'ligue1-marseille-24-away', name:'Olympique Marsella Visitante 2023/24', league:'Ligue 1', team:'Olympique de Marsella', season:'2023/24', kit:'Visitante', price:88, tags:['Puma'], image:'assets/images/marseille-23-24.jpg' },
-    ];
+    card.append(img,title,price,btn);
+    grid.appendChild(card);
+  });
+}
 
-    const leagueTeams = {
-      'LaLiga': ['FC Barcelona','Real Madrid','Atlético de Madrid','Sevilla','Real Sociedad','Valencia'],
-      'Premier League': ['Manchester City','Manchester United','Arsenal','Chelsea','Liverpool','Tottenham'],
-      'Serie A': ['Juventus','Inter','AC Milan','Napoli','Roma','Lazio'],
-      'Bundesliga': ['Bayern München','Borussia Dortmund','RB Leipzig','Bayer Leverkusen','Eintracht Frankfurt'],
-      'Ligue 1': ['Paris Saint-Germain','Olympique de Marsella','Olympique Lyon','AS Monaco','Lille']
-    };
+// Modal
+function openModal(p){
+  document.getElementById('modalTitle').textContent = p.name;
+  document.getElementById('modalPrice').textContent = p.price + '€';
+  const imgC = document.getElementById('modalImg');
+  imgC.innerHTML='';
+  const img = document.createElement('img');
+  img.src = p.image;
+  img.alt = p.name;
+  imgC.appendChild(img);
+  document.getElementById('modal').classList.add('open');
+}
+document.getElementById('btnCerrar').onclick=()=>document.getElementById('modal').classList.remove('open');
 
-    /* HELPERS */
-    const $ = s => document.querySelector(s);
-    const el = (tag, attrs={}) => Object.assign(document.createElement(tag), attrs);
-
-    function jerseySVG(){
-      const wrapper = el('div');
-      wrapper.innerHTML = `
-        <svg class="jersey-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#2ad38c"/>
-              <stop offset="100%" stop-color="#29b457"/>
-            </linearGradient>
-          </defs>
-          <path fill="url(#g)" d="M160 64l-48 32-64 16 24 104 64-16v208c0 26.5 21.5 48 48 48h192c26.5 0 48-21.5 48-48V200l64 16 24-104-64-16-48-32-64 40h-64l-64-40z"/>
-        </svg>`;
-      return wrapper.firstElementChild;
-    }
-
-    /* STATE + persistencia */
-    const state = { league:'', team:'', search:'', sort:'popular', cartCount:0 };
-    let lastFocusedElement = null;
-    function loadCart(){ state.cartCount = parseInt(localStorage.getItem('cartCount') || '0', 10); }
-    function saveCart(){ localStorage.setItem('cartCount', String(state.cartCount)); }
-
-    /* INICIALIZACION */
-    function init(){
-      $('#footerYear').textContent = new Date().getFullYear();
-      loadCart();
-
-      const nav = $('#navLeagues');
-      Object.keys(leagueTeams).forEach(l => {
-        const btn = el('button', {className:'pill-nav', type:'button'});
-        btn.textContent = l;
-        btn.addEventListener('click', ()=>{ state.league = l; syncFiltersFromState(); render(); scrollToTop(); });
-        nav.appendChild(btn);
-      });
-
-      const leagueSelect = $('#selectLeague');
-      leagueSelect.innerHTML = `<option value="">Todas</option>` + Object.keys(leagueTeams).map(l=>`<option value="${l}">${l}</option>`).join('');
-      leagueSelect.addEventListener('change', e=>{ state.league = e.target.value; updateTeamOptions(); });
-
-      $('#selectTeam').addEventListener('change', e=>{ state.team = e.target.value; });
-      $('#inputQuickSearch').addEventListener('input', e=>{ state.search = e.target.value; render(); });
-      $('#inputHeaderSearch').addEventListener('input', e=>{ state.search = e.target.value; render(); });
-      $('#selectSort').addEventListener('change', e=>{ state.sort = e.target.value; render(); });
-      $('#btnApplyFilters').addEventListener('click', ()=> render());
-      $('#btnClearFilters').addEventListener('click', ()=> { resetFilters(); render(); });
-      $('#btnResetFilters').addEventListener('click', ()=> { resetFilters(); render(); });
-
-      $('#btnViewCart').addEventListener('click', ()=>{ toast(`Tienes ${state.cartCount} artículo(s) en el carrito`); });
-
-      $('#btnCloseModal').addEventListener('click', closeModal);
-      $('#modalProduct').addEventListener('click', (e)=>{ if(e.target.id==='modalProduct') closeModal(); });
-      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
-
-      $('#btnAddToCart').addEventListener('click', ()=>{ state.cartCount++; $('#cartCount').textContent = state.cartCount; saveCart(); toast('Añadido al carrito'); });
-
-      $('#btnShare').addEventListener('click', async ()=>{
-        try{
-          const data = $('#modalTitle').textContent + ' — ' + $('#modalMeta').textContent;
-          await navigator.clipboard.writeText(data);
-          toast('Información copiada al portapapeles');
-        }catch{ toast('No se pudo compartir'); }
-      });
-
-      updateTeamOptions();
-      syncFiltersFromState();
-      render();
-    }
-
-    function updateTeamOptions(){
-      const teamSel = $('#selectTeam');
-      const league = state.league;
-      const teams = league ? (leagueTeams[league] || []) : Object.values(leagueTeams).flat();
-      const unique = [...new Set(teams)];
-      const opts = ['<option value="">Todos</option>', ...unique.map(t=>`<option value="${t}">${t}</option>`)];
-      teamSel.innerHTML = opts.join('');
-    }
-
-    function resetFilters(){
-      state.league = ''; state.team = ''; state.search = ''; state.sort = 'popular';
-      syncFiltersFromState();
-    }
-
-    function syncFiltersFromState(){
-      $('#selectLeague').value = state.league;
-      updateTeamOptions();
-      $('#selectTeam').value = state.team;
-      $('#inputQuickSearch').value = state.search;
-      $('#inputHeaderSearch').value = state.search;
-      $('#selectSort').value = state.sort;
-      $('#cartCount').textContent = state.cartCount;
-    }
-
-    function render(){
-      let items = catalog.slice();
-      if(state.league) items = items.filter(p => p.league === state.league);
-      if(state.team) items = items.filter(p => p.team === state.team);
-      if(state.search){
-        const q = state.search.toLowerCase();
-        items = items.filter(p => (
-          p.name.toLowerCase().includes(q) ||
-          p.team.toLowerCase().includes(q) ||
-          p.season.toLowerCase().includes(q) ||
-          p.tags.join(' ').toLowerCase().includes(q)
-        ));
-      }
-
-      if(state.sort === 'priceAsc') items.sort((a,b)=>a.price-b.price);
-      else if(state.sort === 'priceDesc') items.sort((a,b)=>b.price-a.price);
-      else if(state.sort === 'seasonDesc') items.sort((a,b)=>seasonValue(b.season)-seasonValue(a.season));
-      else items.sort(()=>Math.random() - .5);
-
-      const grid = $('#gridProducts'); grid.innerHTML = '';
-      items.forEach(p => grid.appendChild(productCard(p)));
-
-      $('#resultsMeta').textContent = `${items.length} resultado${items.length!==1?'s':''}${state.league?` en ${state.league}`:''}${state.team?` · ${state.team}`:''}`;
-    }
-
-    function seasonValue(s){
-      const m = /^(\d{4})\/(\d{2})$/.exec(s); if(!m) return 0; return parseInt(m[1]) + parseInt(m[2])/100;
-    }
-
-    function productCard(p){
-      const card = el('article', {className:'product-card', role:'article'});
-      const thumb = el('div', {className:'product-thumb'});
-
-      if(p.image){
-        const img = el('img', {src:p.image, alt:p.name, className:'product-img'});
-        img.loading = 'lazy';
-        thumb.appendChild(img);
-      } else {
-        thumb.appendChild(jerseySVG());
-      }
-
-      const info = el('div',{className:'product-info'});
-      const meta = el('div',{className:'product-meta'});
-      meta.innerHTML = `<span>${p.league}</span><span>${p.season}</span>`;
-
-      const title = el('div',{className:'product-title'}); title.textContent = p.name;
-      const price = el('div',{className:'product-price'}); price.textContent = p.price.toFixed(0) + '€';
-
-      const tags = el('div',{className:'product-tags'});
-      [p.team,p.kit,...p.tags].forEach(t => { const tg = el('span',{className:'product-tag'}); tg.textContent = t; tags.appendChild(tg); });
-
-      const actions = el('div',{className:'product-actions'});
-      const view = el('button',{className:'btn btn-primary', type:'button'}); view.textContent = 'Ver';
-      const add = el('button',{className:'btn btn-ghost', type:'button'}); add.textContent = 'Añadir';
-      view.addEventListener('click', ()=> openModal(p, view));
-      add.addEventListener('click', ()=> { state.cartCount++; $('#cartCount').textContent = state.cartCount; saveCart(); toast('Añadido al carrito'); });
-
-      actions.append(view, add);
-      info.append(meta, title, price, tags, actions);
-      card.append(thumb, info);
-      return card;
-    }
-
-    function openModal(p, openerEl = null){
-      $('#modalTitle').textContent = p.name;
-      $('#modalMeta').textContent = `${p.team} · ${p.league} · ${p.season}`;
-      $('#modalTags').innerHTML = '';
-      [p.kit, ...p.tags].forEach(t => { const s = el('span',{className:'product-tag'}); s.textContent = t; $('#modalTags').appendChild(s); });
-      $('#modalPrice').textContent = p.price.toFixed(0) + '€';
-
-      const media = $('#modalMedia'); media.innerHTML = '';
-      if(p.image){
-        const img = el('img',{src:p.image, alt:p.name, className:'modal-img'});
-        img.loading = 'eager';
-        media.appendChild(img);
-      } else {
-        media.appendChild(jerseySVG());
-      }
-
-      lastFocusedElement = openerEl || document.activeElement;
-      $('#modalProduct').classList.add('open');
-      $('#modalProduct').style.display = 'flex';
-      $('#modalProduct').setAttribute('aria-hidden', 'false');
-      setTimeout(()=> { $('#btnCloseModal').focus(); }, 50);
-    }
-
-    function closeModal(){
-      if(!$('#modalProduct')) return;
-      $('#modalProduct').classList.remove('open');
-      $('#modalProduct').style.display = 'none';
-      $('#modalProduct').setAttribute('aria-hidden', 'true');
-      if(lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
-      else { const fallback = document.querySelector('.pill-nav, .btn'); if(fallback) fallback.focus(); }
-    }
-
-    function toast(msg){
-      const t = $('#toast-msg'); t.textContent = msg; t.classList.add('show'); t.style.display = 'block';
-      setTimeout(()=> { t.classList.remove('show'); t.style.display = 'none'; }, 1600);
-    }
-
-    function scrollToTop(){ window.scrollTo({top:0, behavior:'smooth'}); }
-
-    /* Inicializa todo */
-    init();
-  </script>
+// Render inicial
+renderCatalog();
+</script>
 </body>
 </html>
