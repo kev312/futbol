@@ -1,0 +1,228 @@
+/* ==== ESTILO GENERAL ==== */
+body {
+  background-color: #050810;
+  color: #e0fff5;
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ==== CABECERA ==== */
+header {
+  text-align: center;
+  padding: 25px 0;
+  background: linear-gradient(90deg, #00ffd1, #00a3ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.3em;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+/* ==== MENÚ DE NAVEGACIÓN ==== */
+nav {
+  background-color: #050505;
+  box-shadow: 0 2px 15px rgba(0, 255, 209, 0.4);
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0 20px;
+  flex-wrap: wrap;
+  gap: 10px 25px;
+}
+
+nav li {
+  margin: 6px 0;
+}
+
+nav a {
+  color: #c8fff5;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.02em;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #00ffd1, #00a3ff);
+  transition: width 0.25s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 209, 0.7);
+}
+
+nav a:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ==== CUADRO DE BÚSQUEDA ==== */
+#busqueda {
+  text-align: center;
+  margin: 30px 0 10px;
+}
+
+#searchBox {
+  padding: 10px 14px;
+  width: 260px;
+  max-width: 80%;
+  border: 1.5px solid #00ffd1;
+  background: #02040a;
+  color: #c8fff5;
+  border-radius: 999px;
+  outline: none;
+  box-shadow: 0 0 12px rgba(0, 255, 209, 0.4);
+  transition: box-shadow 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+}
+
+#searchBox::placeholder {
+  color: #6fffe6;
+  opacity: 0.7;
+}
+
+#searchBox:focus {
+  box-shadow: 0 0 20px rgba(0, 255, 209, 0.7);
+  border-color: #00a3ff;
+  transform: translateY(-1px);
+}
+
+#searchBtn {
+  padding: 10px 22px;
+  margin-left: 10px;
+  border: none;
+  background: linear-gradient(135deg, #00ffd1, #00a3ff);
+  color: #02040a;
+  font-weight: 700;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(0, 255, 209, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+#searchBtn:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 0 22px rgba(0, 255, 209, 0.8);
+  filter: brightness(1.05);
+}
+
+/* ==== SECCIÓN DE CAMISETAS ==== */
+#topCamisetas {
+  text-align: center;
+  padding: 35px 20px 50px;
+}
+
+#topCamisetas h2 {
+  color: #e0fff5;
+  margin-bottom: 35px;
+  font-size: 1.9em;
+  letter-spacing: 1px;
+}
+
+/* Contenedor de tarjetas */
+.camisetas-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 35px;
+}
+
+/* Tarjeta individual */
+.camiseta {
+  background: radial-gradient(circle at top, rgba(0, 255, 209, 0.17), rgba(0, 10, 20, 0.95));
+  border: 1px solid rgba(0, 255, 209, 0.4);
+  border-radius: 16px;
+  padding: 16px 16px 18px;
+  width: 230px;
+  max-width: 90vw;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 0 20px rgba(0, 255, 209, 0.09);
+}
+
+/* Imagen de camiseta */
+.camiseta img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+/* Hover de tarjeta */
+.camiseta:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 255, 209, 0.8);
+  box-shadow: 0 18px 40px rgba(0, 255, 209, 0.25);
+}
+
+/* Hover de imagen (extra, además del JS) */
+.camiseta:hover img {
+  transform: scale(1.03);
+}
+
+/* Nombre de camiseta */
+.camiseta p {
+  margin-top: 14px;
+  color: #e0fff5;
+  font-weight: 600;
+  font-size: 1.02em;
+}
+
+/* ==== ANIMACIONES SUAVES ==== */
+@keyframes soft-glow {
+  from {
+    text-shadow: 0 0 4px #00ffd1;
+  }
+  to {
+    text-shadow: 0 0 18px #00a3ff;
+  }
+}
+
+header,
+#topCamisetas h2 {
+  animation: soft-glow 1.8s ease-in-out infinite alternate;
+}
+
+/* ==== FOOTER ==== */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  color: #8cffdf;
+  border-top: 1px solid rgba(0, 255, 209, 0.3);
+  font-size: 0.9em;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 600px) {
+  header {
+    font-size: 1.8em;
+    padding: 18px 10px;
+  }
+
+  #topCamisetas {
+    padding: 25px 10px 40px;
+  }
+
+  .camisetas-container {
+    gap: 22px;
+  }
+}
